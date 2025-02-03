@@ -1,3 +1,14 @@
+terraform {
+  required_version = ">= 1.2.0"
+
+  required_providers {
+    aws = {
+      source  = "hashicorp/aws"
+      version = "~> 5.0"
+    }
+  }
+}
+
 provider "aws" {
   region = "us-east-2"
 }
@@ -62,13 +73,13 @@ resource "aws_launch_template" "abbas_web_template" {
 
   tag_specifications {
     resource_type = "instance"
-    tags = { Name = "abbas-web-server-instance" }
+    tags          = { Name = "abbas-web-server-instance" }
   }
 }
 
 # Auto Scaling Group
 resource "aws_autoscaling_group" "abbas_web_asg" {
-  desired_capacity     = 2
+  desired_capacity    = 2
   max_size            = 10
   min_size            = 2
   vpc_zone_identifier = data.aws_subnets.abbas_subnets.ids
